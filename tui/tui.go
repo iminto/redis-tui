@@ -154,6 +154,8 @@ func NewRedisTUI(redisClient api.RedisClient, maxKeyLimit int64, version string,
 					}
 				}
 			}
+		case "refresh":
+			tui.redrawKeyPanel()
 		default:
 			for i, pv := range tui.focusPrimitives {
 				if pv.Key == name {
@@ -280,6 +282,39 @@ func (tui *RedisTUI) redrawRightPanel(center tview.Primitive) {
 		AddItem(tui.metaPanel, 4, 1, false).
 		AddItem(center, 0, 7, false).
 		AddItem(tui.outputPanel, 8, 1, false)
+}
+
+func (tui *RedisTUI) redrawKeyPanel() {
+	tui.keyItemsPanel.Clear()
+	tui.leftPanel.RemoveItem(tui.keyItemsPanel)
+
+	info, err := api.RedisServerInfo(tui.config, tui.redisClient)
+	if err != nil {
+		tui.outputChan <- core.OutputMessage{Color: tcell.ColorRed, Message: fmt.Sprintf("errors: %s", err)}
+	}
+	tui.app.QueueUpdateDraw(func() {
+		tui.helpServerInfoPanel.SetText(info)
+	})
+
+	keys, _, err := tui.redisClient.Scan(0, "*", tui.maxKeyLimit*2).Result()
+	if err != nil {
+		tui.outputChan <- core.OutputMessage{Color: tcell.ColorRed, Message: fmt.Sprintf("errors: %s", err)}
+		return
+	}
+	tui.app.QueueUpdateDraw(func() {
+		for i, k := range keys {
+			tui.keyItemsPanel.AddItem(tui.keyItemsFormat(i, k), "", 0, tui.itemSelectedHandler(i, k))
+		}
+		tui.leftPanel.AddItem(tui.keyItemsPanel, 0, 1, true)
+
+		tui.summaryPanel.Clear()
+		tui.leftPanel.RemoveItem(tui.summaryPanel)
+		tui.summaryPanel.SetText(fmt.Sprintf(" Total matched: %d", len(keys)))
+
+		tui.leftPanel.AddItem(tui.summaryPanel, 3, 1, false)
+		tui.app.SetFocus(tui.keyItemsPanel)
+	})
+
 }
 
 func (tui *RedisTUI) createSummaryPanel() *tview.TextView {

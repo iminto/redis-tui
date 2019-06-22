@@ -19,6 +19,7 @@ var keyBindings = KeyBindings{
 	"command_result":   {tcell.KeyF5, tcell.KeyCtrlR},
 	"quit":             {tcell.KeyEsc, tcell.KeyCtrlQ},
 	"switch_focus":     {tcell.KeyTab},
+	"refresh":          {tcell.KeyCtrlB},
 }
 
 func NewKeyBinding() KeyBindings {
