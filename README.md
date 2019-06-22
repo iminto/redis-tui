@@ -13,6 +13,6 @@ A Redis Text-based UI client in CLI.
 - [ ] The return value of the `SCAN` command is not formatted correctly
 
 
-## Stargazers over time
+## Plus
 
-[![Stargazers over time](https://starchart.cc/mylxsw/redis-tui.svg)](https://starchart.cc/mylxsw/redis-tui)
+- Use ctrl+b to refresh the redis key list.
