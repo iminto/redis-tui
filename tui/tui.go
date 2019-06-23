@@ -556,7 +556,8 @@ func (tui *RedisTUI) createSearchPanel() *tview.InputField {
 		if text == "" || text == "*" {
 			keys, _, err = tui.redisClient.Scan(0, text, tui.maxKeyLimit).Result()
 		} else {
-			keys, err = tui.redisClient.Keys(text).Result()
+			//keys, err = tui.redisClient.Keys(text).Result()
+			keys, _, err = tui.redisClient.Scan(0, text, tui.maxKeyLimit).Result()
 		}
 
 		if err != nil {
