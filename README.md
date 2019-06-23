@@ -13,6 +13,10 @@ A Redis Text-based UI client in CLI.
 - [ ] The return value of the `SCAN` command is not formatted correctly
 
 
-## Plus
+## plus
 
 - Use ctrl+b to refresh the redis key list.
+
+## bugs known
+- Because tcell library which redis-Tui depends on does not support cygwin/msys,so you can't run it in **cmder**(a 
+portable console emulator for Windows) and so on,but you can run it on Win's built-in cmd.
