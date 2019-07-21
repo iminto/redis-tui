@@ -2,15 +2,13 @@ package tui
 
 import (
 	"fmt"
-	"strings"
-	"time"
-
 	"github.com/gdamore/tcell"
-	"github.com/mylxsw/go-toolkit/collection"
 	"github.com/mylxsw/redis-tui/api"
 	"github.com/mylxsw/redis-tui/config"
 	"github.com/mylxsw/redis-tui/core"
 	"github.com/rivo/tview"
+	"strings"
+	"time"
 )
 
 type primitiveKey struct {
@@ -472,7 +470,7 @@ func (tui *RedisTUI) createCommandPanel() *tview.Flex {
 			))
 		} else {
 			commandTipView.SetTextColor(tcell.ColorBlue).
-				SetText(collection.MustNew(matchedCommands).Reduce(func(carry string, item api.RedisHelp) string {
+				SetText(core.MustNew(matchedCommands).Reduce(func(carry string, item api.RedisHelp) string {
 					if carry == "" {
 						return item.Command
 					}
