@@ -243,29 +243,6 @@ func (tui *RedisTUI) Start() error {
 
 	tui.pages = tview.NewPages()
 	tui.pages.AddPage("base", tui.layout, true, true)
-	// welcomeScreen := tview.NewInputField().SetDrawFunc(func(screen tcell.Screen, x, y, width, height int) (i int, i2 int, i3 int, i4 int) {
-	// 	// Draw a horizontal line across the middle of the box.
-	// 	centerY := y + height/2
-	// 	for cx := x + 1; cx < x+width-1; cx++ {
-	// 		screen.SetContent(cx, centerY, tview.BoxDrawingsDoubleDownAndHorizontal, nil, tcell.StyleDefault.Foreground(tcell.ColorWhite))
-	// 	}
-	//
-	// 	// Write some text along the horizontal line.
-	// 	tview.Print(screen, " Hello, world! ", x+1, centerY, width-2, tview.AlignCenter, tcell.ColorYellow)
-	//
-	// 	// Space for other content.
-	// 	return x + 1, centerY + 1, width - 2, height - (centerY + 1 - y)
-	// })
-	//
-	// tui.pages.AddPage("welcome_screen", welcomeScreen, true, true)
-	//
-	// go func() {
-	// 	time.Sleep(2 * time.Second)
-	// 	tui.app.QueueUpdateDraw(func() {
-	// 		tui.pages.RemovePage("welcome_screen")
-	// 	})
-	// }()
-
 	return tui.app.SetRoot(tui.pages, true).Run()
 }
 
@@ -303,7 +280,7 @@ func (tui *RedisTUI) redrawKeyPanel() {
 		for i, k := range keys {
 			tui.keyItemsPanel.AddItem(tui.keyItemsFormat(i, k), "", 0, tui.itemSelectedHandler(i, k))
 		}
-		tui.leftPanel.AddItem(tui.keyItemsPanel, 0, 1, true)
+		tui.leftPanel.AddItem(tui.keyItemsPanel, 0, 1, false)
 
 		tui.summaryPanel.Clear()
 		tui.leftPanel.RemoveItem(tui.summaryPanel)
@@ -632,10 +609,11 @@ func (tui *RedisTUI) createHelpPanel() *tview.Flex {
 
 	tui.helpMessagePanel = tview.NewTextView()
 	tui.helpMessagePanel.SetTextColor(tcell.ColorOrange).SetText(fmt.Sprintf(
-		" ❈ %s - open command panel, %s - switch focus, %s - quit",
+		" ❈ %s: open command panel, %s: switch focus, %s: quit, %s: refresh",
 		tui.keyBindings.Name("command"),
 		tui.keyBindings.Name("switch_focus"),
 		tui.keyBindings.Name("quit"),
+		tui.keyBindings.Name("refresh"),
 	))
 
 	helpPanel.AddItem(tui.helpMessagePanel, 1, 1, false)

@@ -14,7 +14,7 @@ var keyBindings = KeyBindings{
 	"key_string_value": {tcell.KeyF7, tcell.KeyCtrlA},
 	"key_hash":         {tcell.KeyF6, tcell.KeyCtrlY},
 	"output":           {tcell.KeyF9, tcell.KeyCtrlO},
-	"command":          {tcell.KeyF1, tcell.KeyCtrlN},
+	"command":          {tcell.KeyF1},
 	"command_focus":    {tcell.KeyF4, tcell.KeyCtrlF},
 	"command_result":   {tcell.KeyF5, tcell.KeyCtrlR},
 	"quit":             {tcell.KeyEsc, tcell.KeyCtrlQ},
