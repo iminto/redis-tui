@@ -20,5 +20,5 @@ A Redis Text-based UI client in CLI, fork from https://github.com/mylxsw/redis-t
   #connect redis local
   localhost:6379
   ```
-- Sometimes,the application panics when resize the windows and the windows contains emoji or grapheme cluster. 
+- Sometimes,the application panics when resize the windows and the windows contains emoji or grapheme cluster.It's the bug of third mod,I resolve it locally,you can download from release page. 
   
